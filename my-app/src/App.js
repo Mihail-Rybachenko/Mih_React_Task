@@ -1,7 +1,45 @@
+import { nanoid } from 'nanoid';
+import { v4 as uuidv4 } from 'uuid';
 import logo from './logo.svg';
 import './App.css';
-
+import React, { useState } from 'react';
 function App() {
+  const userss = [
+    { id: uuidv4(), name: 'user1', age: 25 },
+    { id: uuidv4(), name: 'user2', age: 30 },
+    { id: uuidv4(), name: 'user3', age: 35 },
+  ];
+  const [numberInput, setNumberInput] = useState('');
+  const [divisorMultiplicationResult, setDivisorMultiplicationResult] = useState(1);
+  const [inputValue, setInputValue] = useState('');
+  const [digitSum, setDigitSum] = useState(0);
+  const currentDay = new Date().toISOString().split('T')[0]; // Текущая дата в формате yyyy-mm-dd
+  const [startDate, setStartDate] = useState(currentDay);
+  const [endDate, setEndDate] = useState(currentDay);
+  const [daysGap, setDaysGap] = useState(0);
+  const [date1, setDate1] = useState('');
+  const [date2, setDate2] = useState('');
+  const [dayDifference, setDayDifference] = useState(0);
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [calcResult, setCalcResult] = useState(0);
+  const [value3, setValue3] = useState(0);
+  const [value4, setValue4] = useState(0);
+  const [value5, setValue5] = useState(0);
+  const [value6, setValue6] = useState(0);
+  const [value7, setValue7] = useState(0);
+  const [temperatureF, setTemperatureF] = useState(0);
+  const [userAge, setUserAge] = useState(0);
+  const [inputText, setInputText] = useState('');
+  const [value1, setValue1] = useState('');
+  const [value2, setValue2] = useState('');
+  const [age3, setAge3] = useState(25);
+  const [isBanned, setIsBanned] = useState(false);
+  const [firstName, setFirstName] = useState('Anna');
+  const [lastName, setLastName] = useState('Smith');
+  const [name2] = useState('John');
+  const [surname] = useState('Doe');
+  const [age2] = useState(30);
   const str1 = 'text1';
 	const str2 = 'text1';
   const name = 'user';
@@ -19,6 +57,7 @@ function App() {
   let show = true;
   let admintext;
   let text;
+  const average = (value3 + value4 + value5 + value6 + value7) / 5;
   const isAuth = true;
   const isAuth1 = false;
   const arr5 = [];
@@ -65,18 +104,83 @@ function App() {
   function func4(arg1, event, arg2) {
 		console.log(arg1, event, arg2);
 	}
+  function handleSum() {
+    setCalcResult(Number(num1) + Number(num2));
+  }
+  function onInputBlur() {
+    const num = Number(numberInput);
+    let result = 1;
+    for (let i = 1; i <= num; i++) {
+      if (num % i === 0) {
+        result *= i;
+      }
+    }
+    setDivisorMultiplicationResult(result);
+  }
+  function handleMultiply() {
+    setCalcResult(Number(num1) * Number(num2));
+  }
   function func3(event, arg) {
 		console.log(event, arg);
 	}
   function func2(arg, event) {
 		console.log(arg, event);
 	}
+  function handleInputBlur() {
+    const totalSum = inputValue.split('').reduce((acc, digit) => acc + Number(digit), 0);
+    setDigitSum(totalSum);
+  }
+  function computeDateDifference() {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = Math.abs(end - start);
+    setDaysGap(Math.floor(timeDiff / (1000 * 3600 * 24)));
+  }
+  function calculateDateDifference() {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    const timeDifference = Math.abs(d2 - d1);
+    const dayCount = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    setDayDifference(dayCount);
+  }
+  function handleChange3(event) {
+    setValue3(+event.target.value);
+  }
+  function handleChange4(event) {
+    setValue4(+event.target.value);
+  }
+  function handleChange5(event) {
+    setValue5(+event.target.value);
+  }
+  function handleChange6(event) {
+    setValue6(+event.target.value);
+  }
+  function handleChange7(event) {
+    setValue7(+event.target.value);
+  }
   function handleClick(event) {
     console.log(event.target); 
   }
   function func(event) {
 		console.log(event);
 	}
+  function handleInputChange(event) {
+    setInputText(event.target.value);
+  }
+  function handleAgeChange(event) {
+    setUserAge(event.target.value);
+  }
+  function handleTempChange(event) {
+    setTemperatureF(event.target.value);
+  }
+
+  function convertToCelsius(fahrenheit) {
+    return (fahrenheit - 32) * (5 / 9);
+  }
+  function calculateBirthYear(age) {
+    const currentYear = new Date().getFullYear();
+    return currentYear - age;
+  }
   function show1() {
 		alert(1);
 	}
@@ -338,6 +442,124 @@ function App() {
         {rows}
       </tbody>
     </table>
+    <p>47-8#1 ID: {uuidv4()}</p>
+    <p>47-8#2 ID: {nanoid()}</p>
+    <p>49#1</p>
+    {userss.map(user => (
+  <p key={user.id}>{user.name}, {user.age}</p>
+))}
+<p>52#1</p>
+   <div>
+      <p>Имя: {name2}</p>
+      <p>Фамилия: {surname}</p>
+      <p>Возраст: {age2}</p>
+    </div>
+    <p>53#1</p>
+    <div>
+      <p>Имя: {firstName}</p>
+      <p>Фамилия: {lastName}</p>
+
+      
+      <button onClick={() => setFirstName('Eva')}>Изменить имя</button>
+      <button onClick={() => setLastName('Johnson')}>Изменить фамилию</button>
+    </div>
+    <p>54#1</p>
+    <div>
+      <p>{isBanned ? 'Пользователь забанен' : 'Пользователь не забанен'}</p>
+      <button onClick={() => setIsBanned(true)}>Забанить</button>
+      <button onClick={() => setIsBanned(false)}>Разбанить</button>
+    </div>
+    <p>54#2</p>
+    <div>
+      <p>{isBanned ? 'Пользователь забанен' : 'Пользователь не забанен'}</p>
+      
+      
+      {isBanned ? (
+        <button onClick={() => setIsBanned(false)}>Разбанить</button>
+      ) : (
+        
+        <button onClick={() => setIsBanned(true)}>Забанить</button>
+      )}
+    </div>
+    <p>55#1</p>
+    <div>
+      <p>Возраст: {age3}</p>
+      <button onClick={() => setAge3(age3 + 1)}>Увеличить возраст</button>
+      <button onClick={() => setAge3(age3 - 1)}>Уменьшить возраст</button>
+    </div>
+    <p>56#1</p>
+    <div>
+      <input 
+        value={value1} 
+        onChange={event => setValue1(event.target.value)} 
+      />
+      <p>Текст первого инпута: {value1}</p>
+
+      <input 
+        value={value2} 
+        onChange={event => setValue2(event.target.value)} 
+      />
+      <p>Текст второго инпута: {value2}</p>
+    </div>
+    <p>57#1</p>
+    <div>
+      <input value={inputText} onChange={handleInputChange} />
+      <p>Количество символов: {inputText.length}</p>
+    </div>
+    <p>58#1</p>
+    <div>
+      <input type="number" value={userAge} onChange={handleAgeChange} />
+      <p>Ваш год рождения: {calculateBirthYear(userAge)}</p>
+    </div>
+    <p>58#2</p>
+    <div>
+      <input type="number" value={temperatureF} onChange={handleTempChange} />
+      <p>{temperatureF}°F = {convertToCelsius(temperatureF).toFixed(2)}°C</p>
+    </div>
+    <p>59#1</p>
+    <div>
+      <input type="number" value={value3} onChange={handleChange3} />
+      <input type="number" value={value4} onChange={handleChange4} />
+      <input type="number" value={value5} onChange={handleChange5} />
+      <input type="number" value={value6} onChange={handleChange6} />
+      <input type="number" value={value7} onChange={handleChange7} />
+      <p>Среднее арифметическое: {average}</p>
+    </div>
+    <p>60#1
+    <div>
+      <input value={num1} onChange={e => setNum1(e.target.value)} />
+      <input value={num2} onChange={e => setNum2(e.target.value)} />
+      <button onClick={handleSum}>Сумма</button>
+      <button onClick={handleMultiply}>Произведение</button>
+      <p>Результат: {calcResult}</p>
+    </div>
+    </p>
+    <p>60#2</p>
+    <div>
+      <input type="date" value={date1} onChange={e => setDate1(e.target.value)} />
+      <input type="date" value={date2} onChange={e => setDate2(e.target.value)} />
+      <button onClick={calculateDateDifference}>Посчитать разницу</button>
+      <p>Разница в днях: {dayDifference}</p>
+    </div>
+    <p>60#3</p>
+    <div>
+      <input type="date" value={startDate} onChange={event => setStartDate(event.target.value)} />
+      <input type="date" value={endDate} onChange={event => setEndDate(event.target.value)} />
+      
+      <button onClick={computeDateDifference}>Вычислить разницу</button>
+      
+      <p>Разница в днях: {daysGap}</p>
+    </div>
+    <p>60#4</p>
+    <div>
+      <input type="number" value={inputValue} onChange={event => setInputValue(event.target.value)} onBlur={handleInputBlur} />
+      <p>Сумма цифр: {digitSum}</p>
+    </div>
+    <p>60#5</p>
+    <div>
+      <input type="number" value={numberInput} onChange={event => setNumberInput(event.target.value)} onBlur={onInputBlur} />
+      <p>Произведение делителей: {divisorMultiplicationResult}</p>
+    </div>
         <a
           className="App-link"
           href="https://reactjs.org"
