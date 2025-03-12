@@ -4,11 +4,52 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
 function App() {
+  const cities = ["Москва", "Санкт-Петербург", "Казань", "Новосибирск", "Екатеринбург"];
+	const [selectedCity, setSelectedCity] = useState("");
+
+	const cityOptions = cities.map((city, index) => (
+		<option key={index} value={city}>
+			{city}
+		</option>
+	));
+  const [selectedValue, setSelectedValue] = useState("");
   const userss = [
     { id: uuidv4(), name: 'user1', age: 25 },
     { id: uuidv4(), name: 'user2', age: 30 },
     { id: uuidv4(), name: 'user3', age: 35 },
   ];
+  function translit(text) {
+    const map = {
+        а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "yo", ж: "zh",
+        з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o",
+        п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "kh", ц: "ts",
+        ч: "ch", ш: "sh", щ: "shch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya"
+    };
+    return text.split("").map(char => map[char] || char).join("");
+}
+const [isChecked, setIsChecked] = useState(false);
+const [numbersText, setNumbersText] = useState("");
+function sumNumbers(inputText) {
+  return inputText
+            .split("\n")
+            .reduce((total, line) => {
+                const num = parseFloat(line.trim());
+                return total + (isNaN(num) ? 0 : num);
+            }, 0);
+}
+const [city, setCity] = useState("");
+
+	function handleSelect(event) {
+		setCity(event.target.value);
+	}
+const [isAgreed, setIsAgreed] = useState(false);
+const [isShown, setIsShown] = useState(false);
+const [knowsHtml, setKnowsHtml] = useState(false);
+    const [knowsCss, setKnowsCss] = useState(false);
+    const [knowsJs, setKnowsJs] = useState(false);
+    const [favLang, setFavLang] = useState("");
+    const [greetingText, setGreetingText] = useState("");
+  const [value, setValue] = useState("");
   const [numberInput, setNumberInput] = useState('');
   const [divisorMultiplicationResult, setDivisorMultiplicationResult] = useState(1);
   const [inputValue, setInputValue] = useState('');
@@ -40,6 +81,8 @@ function App() {
   const [name2] = useState('John');
   const [surname] = useState('Doe');
   const [age2] = useState(30);
+  const [ageGroup, setAgeGroup] = useState("");
+  
   const str1 = 'text1';
 	const str2 = 'text1';
   const name = 'user';
@@ -117,6 +160,10 @@ function App() {
     }
     setDivisorMultiplicationResult(result);
   }
+  function handleButtonClick() {
+    setGreetingText(isAgreed ? "Рад вас видеть!" : "До скорой встречи!");
+}
+
   function handleMultiply() {
     setCalcResult(Number(num1) * Number(num2));
   }
@@ -560,6 +607,199 @@ function App() {
       <input type="number" value={numberInput} onChange={event => setNumberInput(event.target.value)} onBlur={onInputBlur} />
       <p>Произведение делителей: {divisorMultiplicationResult}</p>
     </div>
+    <p>61#1</p>
+    <div>
+            <textarea value={value} onChange={e => setValue(e.target.value)} />
+            <p>{translit(value)}</p>
+        </div>
+        <p>61#2</p>
+        <div>
+            <textarea 
+                value={numbersText} 
+                onChange={e => setNumbersText(e.target.value)} 
+            />
+            <p>Сумма: {sumNumbers(numbersText)}</p>
+        </div>
+        <p>62#1</p>
+        <div>
+            <input type="checkbox" checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} />
+            <button onClick={handleButtonClick}>Показать текст</button>
+            <p>{greetingText}</p>
+        </div>
+        <p>62#2</p>
+        <div>
+            <label>
+                <input type="checkbox" checked={knowsHtml} onChange={() => setKnowsHtml(!knowsHtml)} />
+                HTML
+            </label>
+            <p>{knowsHtml ? "Вы владеете HTML" : "Вы не владеете HTML"}</p>
+
+            <label>
+                <input type="checkbox" checked={knowsCss} onChange={() => setKnowsCss(!knowsCss)} />
+                CSS
+            </label>
+            <p>{knowsCss ? "Вы владеете CSS" : "Вы не владеете CSS"}</p>
+
+            <label>
+                <input type="checkbox" checked={knowsJs} onChange={() => setKnowsJs(!knowsJs)} />
+                JavaScript
+            </label>
+            <p>{knowsJs ? "Вы владеете JavaScript" : "Вы не владеете JavaScript"}</p>
+        </div>
+        <p>63#1</p>
+        <div>
+			<label>
+				<input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+				Мне уже 18 лет
+			</label>
+
+			{isChecked ? (
+				<div>
+					<h2>Поздравляем! Вам 18+</h2>
+					<p>Тут контент для взрослых</p>
+				</div>
+			) : (
+				<div>
+					<p>Сожалеем, вам еще нет 18 лет :(</p>
+				</div>
+			)}
+		</div>
+    <p>63#2</p>
+    <div>
+			<label>
+				<input type="checkbox" checked={isShown} onChange={() => setIsShown(!isShown)} />
+				Показать текст
+			</label>
+
+			{isShown && <p>Этот текст теперь отображается!</p>}
+		</div>
+    <p>64#1</p>
+    <div>
+			<label>
+				Выберите город:
+				<select value={city} onChange={handleSelect}>
+					<option value="">-- Выберите --</option>
+					<option value="Москва">Москва</option>
+					<option value="Санкт-Петербург">Санкт-Петербург</option>
+					<option value="Казань">Казань</option>
+					<option value="Новосибирск">Новосибирск</option>
+				</select>
+			</label>
+      
+			<p>Ваш выбор: {city || "не выбран"}</p>
+      <p>65#1</p>
+      <div>
+			<label>
+				Выберите город:
+				<select value={selectedCity} onChange={(event) => setSelectedCity(event.target.value)}>
+					<option value="">-- Выберите --</option>
+					{cityOptions}
+				</select>
+			</label>
+
+			<p>Ваш выбор: {selectedCity || "не выбран"}</p>
+		</div>
+		</div>
+    <p>66#1</p>
+    <div>
+			<label>
+				Выберите вашу возрастную группу:
+				<select value={ageGroup} onChange={(event) => setAgeGroup(event.target.value)}>
+					<option value="">-- Выберите --</option>
+					<option value="child">от 0 до 12 лет</option>
+					<option value="teen">от 13 до 17 лет</option>
+					<option value="young_adult">от 18 до 25 лет</option>
+					<option value="adult">старше 25 лет</option>
+				</select>
+			</label>
+
+			<p>
+				{ageGroup === "child" && "Вы относитесь к детской возрастной группе."}
+				{ageGroup === "teen" && "Вы относитесь к подростковой возрастной группе."}
+				{ageGroup === "young_adult" && "Вы молодой взрослый."}
+				{ageGroup === "adult" && "Вы взрослый человек."}
+			</p>
+		</div>
+    <p>68#1</p>
+    <div>
+			<label>
+				<input
+					type="radio"
+					name="option"
+					value="1"
+					checked={selectedValue === "1"}
+					onChange={(event) => setSelectedValue(event.target.value)}
+				/>
+				Вариант 1
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="option"
+					value="2"
+					checked={selectedValue === "2"}
+					onChange={(event) => setSelectedValue(event.target.value)}
+				/>
+				Вариант 2
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="option"
+					value="3"
+					checked={selectedValue === "3"}
+					onChange={(event) => setSelectedValue(event.target.value)}
+				/>
+				Вариант 3
+			</label>
+
+			<p>Выбранное значение: {selectedValue || "ничего не выбрано"}</p>
+		</div>
+    <p>68#2</p>
+    <div>
+			<h3>Выберите ваш любимый язык программирования:</h3>
+
+			<label>
+				<input
+					type="radio"
+					name="language"
+					value="JavaScript"
+					checked={favLang === "JavaScript"}
+					onChange={(event) => setFavLang(event.target.value)}
+				/>
+				JavaScript
+			</label>
+
+			<label>
+				<input
+					type="radio"
+					name="language"
+					value="Python"
+					checked={favLang === "Python"}
+					onChange={(event) => setFavLang(event.target.value)}
+				/>
+				Python
+			</label>
+
+			<label>
+				<input
+					type="radio"
+					name="language"
+					value="C++"
+					checked={favLang === "C++"}
+					onChange={(event) => setFavLang(event.target.value)}
+				/>
+				C++
+			</label>
+
+			<p>
+				{favLang
+					? favLang === "JavaScript"
+						? "Отличный выбор! JavaScript — мощный и гибкий язык!"
+						: `Вы выбрали ${favLang}. Отличный выбор!`
+					: "Вы еще не выбрали язык."}
+			</p>
+		</div>
         <a
           className="App-link"
           href="https://reactjs.org"
